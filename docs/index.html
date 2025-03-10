@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JW Player Docs</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .code-box {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            position: relative;
+            overflow: auto;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        iframe:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container text-center">
+        <h1 class="text-3xl font-bold my-4">JW Player Integration Docs</h1>
+        <p class="text-lg">This guide helps you integrate JW Player with full-screen iframe and ads.</p>
+
+        <!-- Full-Screen Iframe -->
+        <div class="my-4">
+            <h2 class="text-xl font-semibold">Player Example</h2>
+            <iframe src="https://cdn-jwplayer.netlify.app" allowfullscreen></iframe>
+        </div>
+
+        <!-- Code Box -->
+        <div class="my-4">
+            <h2 class="text-xl font-semibold">Copy & Paste Code</h2>
+            <div class="position-relative">
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+                <pre class="code-box"><code id="code-snippet">&lt;script src="https://cdn-jwplayer.netlify.app/aVr2lJgW.js"&gt;&lt;/script&gt;
+&lt;div id="player"&gt;&lt;/div&gt;
+&lt;script&gt;
+    const playerInstance = jwplayer("player").setup({
+        controls: true,
+        displaytitle: true,
+        displaydescription: true,
+        abouttext: "RyuuStream",
+        aboutlink: "https://animezia.com",
+        autostart: true,
+        skin: { name: "netflix" },
+        captions: { enabled: true },
+        playlist: [{
+            title: "Anime Episode",
+            description: "Best Anime Streaming",
+            image: "",
+            sources: [{
+                file: "https://mistyvalley31.live/_v7/your-m3u8-url/master.m3u8"
+            }],
+            tracks: [{
+                kind: "captions",
+                file: "https://s.megastatics.com/subtitle/5fbacd492a343a2f30b97d682b61b985/eng-2.vtt",
+                label: "English",
+                default: true
+            }]
+        }],
+        advertising: {
+            client: "vast",
+            schedule: [{
+                offset: "pre",
+                tag: "https://yourserver.com/vast.xml"
+            }]
+        }
+    });
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy Code Script -->
+    <script>
+        function copyCode() {
+            const code = document.getElementById("code-snippet").innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("Code copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
+            });
+        }
+    </script>
+
+</body>
+  </html>
+  
