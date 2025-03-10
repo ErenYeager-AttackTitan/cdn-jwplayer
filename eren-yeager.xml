@@ -1,0 +1,20 @@
+<VAST version="3.0">
+  <Ad id="1">
+    <InLine>
+      <AdSystem>Custom Ad</AdSystem>
+      <AdTitle>ErenYeager - Attack On Titan</AdTitle>
+      <Creatives>
+        <Creative>
+          <Linear skipoffset="00:00:21">
+            <Duration>00:00:31</Duration> 
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="video/mp4">
+                https://cdn-jwplayer.netlify.app/eren.mp4
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>
