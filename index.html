@@ -104,7 +104,19 @@ font-size: 08px;
         }
     });
 
+playerInstance.on('time', function(event) {
+        const currentTime = event.position;
+        const introStart = 138;
+        const introEnd = 215;
+        const outroStart = 1452;
+        const outroEnd = 1542;
 
+        if (currentTime >= introStart && currentTime <= introEnd) {
+            playerInstance.seek(introEnd);
+        } else if (currentTime >= outroStart && currentTime <= outroEnd) {
+            playerInstance.seek(outroEnd);
+        }
+    });
     
     
     playerInstance.on("ready", function() {
