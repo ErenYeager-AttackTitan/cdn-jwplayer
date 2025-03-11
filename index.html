@@ -2,54 +2,51 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-  <link rel="stylesheet" href="https://cdn-jwplayer.netilfy.app/style.css">
-  <meta name="robots" content="noindex, nofollow" />
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-
-<style>
-.wrap #player {
-        display:flex;
-position: absolute;
-height: 100% !important;
-weight: 100 !important;
-}
-
-.wrap .btn {
-        display:flex;
-position: absolute;
-top: 15%;
-left: 90%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-background-color: white;
-color: black;
-font-size: 12px;
-padding: 6px 12px;
-border: 1px solid white;
-cursor: pointer;
-border-radius: 5px;
-}
-
-@media screen and (max-width:600px) {
-.wrap .btn {
-font-size: 08px;
-}
-}
-</style>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/ErenYeager-AttackTitan/cdn-jwplayer/refs/heads/main/style.css">
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 <body>
 
 
-    
+    <style>
+    .wrap #player {
+        position: absolute;
+        height: 100% !important;
+        weight: 100 !important;
+    }
+
+    .wrap .btn {
+        position: absolute;
+        top: 15%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: white;
+        color: black;
+        font-size: 12px;
+        padding: 6px 12px;
+        border: 1px solid white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    @media screen and (max-width:600px) {
+        .wrap .btn {
+            font-size: 08px;
+        }
+    }
+    </style>
     <div class="wrap">
 
         <div id="player"></div>
         <div id="skipIntro"></div>
 
     </div>
+
+
 
 <script src="https://cdn-jwplayer.netlify.app/aVr2lJgW.js"></script>
 
@@ -134,7 +131,6 @@ playerInstance.on('time', function(event) {
    
     
      </script>
-
 
 </body>
 
