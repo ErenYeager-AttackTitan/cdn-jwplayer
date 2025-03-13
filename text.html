@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plyr - Custom Red Theme</title>
+    
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" />
+
+    <style>
+        /* Red Theme */
+        :root {
+            --plyr-color-main: red;
+        }
+
+        /* Hide CC and Volume controls */
+        .plyr__controls button[data-plyr="captions"],
+        .plyr__controls button[data-plyr="mute"],
+        .plyr__controls input[data-plyr="volume"] {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="player" playsinline controls>
+        <source src="https://pixeldra.in/api/file/6d7L25c4" type="video/mp4">
+    </video>
+
+    <!-- Plyr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js"></script>
+    
+    <script>
+        const player = new Plyr('#player', {
+            controls: [
+                'rewind', // Built-in backward button
+                'play',
+                'fast-forward', // Built-in forward button
+                'progress',
+                'current-time',
+                'duration',
+                'fullscreen'
+            ]
+        });
+    </script>
+
+</body>
+</html>
