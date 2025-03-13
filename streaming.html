@@ -116,18 +116,14 @@ var site_config = {
                                         </div>
                                         
                                         <div class="pc-right">
-                                            <?php if($getEpisode['prevEpText'] == "") {
-                                            echo "";
-                                        } else { ?>
+                                            
                                             <div class="pc-item pc-control block-prev">
                                                 <a class="btn btn-sm btn-prev"
                                                     href="/watch<?=$getEpisode['prevEpLink']?>"><i
                                                         class="fas fa-backward mr-2"></i>Prev</a>
                                             </div>&nbsp;
-                                            <?php } ?>
-                                            <?php if($getEpisode['nextEpText'] == "") {
-                                            echo "";
-                                        } else { ?>
+
+						
                                             <div class="pc-item pc-control block-next">
                                                 <a class="btn btn-sm btn-next"
                                                     href="/watch<?=$getEpisode['nextEpLink']?>"><i
@@ -136,8 +132,7 @@ var site_config = {
                                             <?php } ?>
                                             <div class="pc-item pc-fav" id="watch-list-content"></div>
                                             <div class="pc-item pc-download" style="display:none;">
-                                                <a class="btn btn-sm pc-download"><i
-                                                        class="fas fa-download mr-2"></i>Download</a>
+                                                
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
@@ -148,37 +143,13 @@ var site_config = {
                                         <div class="ps_-status">
                                             <div class="content">
                                                 <div class="server-notice"><strong>Currently watching <b>Episode
-                                                            <?=$getEpisode['ep_num']?>
-                                                            <br>
-                                                            <span id="episodeTitle"></span></b></strong> Switch to
-                                                    alternate
-                                                    servers in case of error.</div>
+                                                            
+						</b> </strong>  <br>
+                                                            
+                                                    </div>
                                             </div>
                                         </div>
-                                        <div class="ps_-block ps_-block-sub servers-mixed">
-                                            <div class="ps__-title"><i class="fas fa-server mr-2"></i>SERVERS:</div>
-                                            <div class="ps__-list">
-                                                <div class="item">
-                                                    <a id="server1"
-                                                        href="https://player.ryuk.to?id=<?=$url?>"
-                                                        target="iframe-to-load" class="btn btn-server active">Ryuk Server</a>
-                                                </div>
-                                                <div class="item">
-                                                    <a id="server2"
-                                                        href="https://player.ryuk.to/v2.php?id=<?=$url?>"
-                                                        target="iframe-to-load" class="btn btn-server">Ryuk Server 2</a>
-                                                </div>
-                                                <div class="item">
-                                                    <a id="server3"
-                                                        href="<?=$getEpisode['video']?>"
-                                                        target="iframe-to-load" class="btn btn-server">GogoServer</a>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div id="source-guide"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                        
 
                                 <div id="episodes-content">
                                     <div class="seasons-block seasons-block-max">
@@ -202,13 +173,13 @@ var site_config = {
 
                                                     <?php 
                                                     foreach ($episodelist as $episodelist) {  ?>
-                                                    <a data-number="<?=$episodelist['episodeNum']?>"
-                                                        id="<?=$episodelist['episodeNum']?>"
+                                                    <a data-number=""
+                                                        id=""
                                                         data-id="<?=$episodelist['episodeNum']?>"
                                                         title="Episode <?=$episodelist['episodeNum']?>"
                                                         class="ssl-item ep-item <?php if ($getEpisode['ep_num'] === $episodelist['episodeNum']) {echo 'active';}?>"
-                                                        href="/watch/<?=$episodelist['episodeId']?>">
-                                                        <div class="ssli-order" title=""><?=$episodelist['episodeNum']?>
+                                                        href="/watch/">
+                                                        <div class="ssli-order" title="">
                                                         </div>
                                                         <div class="ssli-detail">
                                                             <div class="ep-name dynamic-name" data-jname="" title="">
@@ -232,7 +203,7 @@ var site_config = {
                                 <div class="anis-content">
                                     <div class="anisc-poster">
                                         <div class="film-poster">
-                                            <img src="<?=$getAnime['imageUrl']?>" data-src="<?=$getAnime['imageUrl']?>"
+                                            <img src="https://cdn.myanimelist.net/r/180x252/images/anime/1517/100633.webp?s=28615cf96b4b29cf649e89ba648f474a" data-src="https://cdn.myanimelist.net/r/180x252/images/anime/1517/100633.webp?s=28615cf96b4b29cf649e89ba648f474a"
                                                 class="film-poster-img ls-is-cached lazyloaded"
                                                 alt="<?=$getAnime['name']?>">
                                         </div>
@@ -243,93 +214,13 @@ var site_config = {
                                                 title="<?=$getAnime['name']?>" data-jname="<?=$getAnime['name']?>"
                                                 style="opacity: 1;"><?=$getAnime['name']?></a>
                                         </h2>
-                                        <div class="film-stats">
-                                            <div class="tac tick-item tick-quality">HD</div>
-                                            <div class="tac tick-item tick-dub"><?php $str = $getAnime['name'];
-                                          $last_word_start = strrpos ( $str , " ") + 1;
-                                          $last_word_end = strlen($str) - 1;
-                                          $last_word = substr($str, $last_word_start, $last_word_end);
-                                          if ($last_word == "(Dub)"){echo "DUB";} else {echo "SUB";}
-                                          ?></div>
-                                            <div class="tac tick-item tick-views">
-                                                <?php if($counter){echo "VIEWS: ".$counter;};?></div>
-                                            <span class="dot"></span>
-                                            <span class="item"><?=$getAnime['status']?></span>
-                                            <span class="dot"></span>
-                                            <span class="item"><?=$getAnime['released']?></span>
-                                            <span class="dot"></span>
-                                            <span class="item"><?=$getAnime['othername']?></span>
-                                            <span class="dot"></span>
-                                            <span class="item"><?=$getAnime['type']?></span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="film-description m-hide">
-                                            <div class="text"><?=$getAnime['synopsis']?></div>
-                                        </div>
-                                        <div class="film-text m-hide mb-3">
-                                           
-                                        </div>
+                                        
                                         <div class="block"><a href="/anime/<?=$anime?>" class="btn btn-xs btn-light"><i
                                                     class="fas fa-book-open mr-2"></i> View detail</a></div>
 
 
-                                        <?php
-                                        $likeClass="far";	
-			                            if(isset($_COOKIE['like_'.$id])){
-			                            	$likeClass="fas";
-			                            }		
-                            
-			                            $dislikeClass="far";	
-			                            if(isset($_COOKIE['dislike_'.$id])){
-			                            	$dislikeClass="fas";
-			                            }	
-                                        ?>
-                                        <div class="dt-rate">
-                                            <div id="vote-info">
-                                                <div class="block-rating">
-                                                    <div class="rating-result">
-                                                        <div class="rr-mark float-left">
-                                                            <strong><i class="fas fa-star text-warning mr-2"></i><span
-                                                                    id="ratingAnime"><?=round((10*$like_count + 5*$dislike_count)/($like_count+$dislike_count),2)?></span></strong>
-                                                            <small id="votedCount">(<?php 
-                                                                if(isset($totalVotes)){
-                                                                echo $totalVotes;
-                                                                }?> Voted)</small>
-                                                        </div>
-                                                        <div class="rr-title float-right">Vote now</div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="description">What do you think about this anime?</div>
-                                                    <div class="button-rate">
-                                                        <button type="button"
-                                                            onclick="setLikeDislike('dislike','<?=$id?>')"
-                                                            class="btn btn-emo rate-bad btn-vote" style="width:50%"
-                                                            data-mark="dislike"><i id="dislike"
-                                                                class="<?php echo $dislikeClass?> fa-thumbs-down">
-                                                            </i><span id="dislikeMsg"
-                                                                class="ml-2">Dislike</span></button>
-                                                        <button onclick="setLikeDislike('like','<?=$id?>')"
-                                                            type="button" class="btn btn-emo rate-good btn-vote"
-                                                            style="width:50%"><i id="like"
-                                                                class="<?php echo $likeClass?> fa-thumbs-up"> </i><span
-                                                                id="likeMsg" class="ml-2">Like</span></button>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </a>
+                                        
 
-                                    </div>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <?php include('./_php/ads/728x90.html')?>
             <div class="container">
                 <div id="main-content">
