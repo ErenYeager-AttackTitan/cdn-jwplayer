@@ -56,7 +56,7 @@
             title: "Dynamic Video",
             description: "",
             sources: [{
-              file: `https://gogoanime-and-hianime-proxy.vercel.app/m3u8-proxy?url=${encodeURIComponent(stream.link.file)}`,
+              file: `${encodeURIComponent(stream.link.file)}`,
               type: "hls"
             }],
             tracks: [
