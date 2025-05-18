@@ -24,8 +24,6 @@
 <script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
 
 <script>
-
-    // API URL (corrected ? to &)
     const apiURL = 'https://anime-api-nu-jet.vercel.app/api/stream?id=anime-112?ep=3303&type=sub&server=hd-2';
 
     async function fetchStreamInfo() {
@@ -37,6 +35,7 @@
           document.getElementById('content').textContent = 'Failed to get stream info';
           return;
         }
+          fetchStreamInfo();
 
         const stream = data.results.streamingLink;
         const videoURL = stream.link.file;
