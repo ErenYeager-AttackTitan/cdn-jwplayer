@@ -42,7 +42,7 @@
         const videoURL = stream.link.file;
         const subtitles = stream.tracks.filter(track => track.kind === 'captions');
         const thumbnails = stream.tracks.find(track => track.kind === 'thumbnails');
-        const subtitles = stream.tracks.filter(track => track.label === 'label);
+        const label = stream.tracks.filter(track => track.label === 'label');
     
     const playerInstance = jwplayer("player").setup({
         controls: true,
