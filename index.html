@@ -24,6 +24,26 @@
 <script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
 
 <script>
+
+    // API URL (corrected ? to &)
+    const apiURL = 'https://anime-api-nu-jet.vercel.app/api/stream?id=anime-112&ep=3303&type=sub&server=hd-2';
+
+    async function fetchStreamInfo() {
+      try {
+        const res = await fetch(apiURL);
+        const data = await res.json();
+
+        if (!data.success) {
+          document.getElementById('content').textContent = 'Failed to get stream info';
+          return;
+        }
+
+        const stream = data.results.streamingLink;
+        const videoURL = stream.link.file;
+        const subtitles = stream.tracks.filter(track => track.kind === 'captions');
+        const thumbnails = stream.tracks.find(track => track.kind === 'thumbnails');
+          
+    
     const playerInstance = jwplayer("player").setup({
         controls: true,
         displaytitle: true,
@@ -46,17 +66,17 @@
             description: "",
             image: "",
             sources: [{
-                "file": "https://cdn-jwplayer.netlify.app/eren.mp4"
+                "file": `https://gogoanime-and-hianime-proxy.vercel.app/m3u8-proxy?url=${videoURL}`
             }],
             tracks: [{
                 kind: "captions",
-                file: "",
-                label: "English",
-                default: true
+                file: subtitles,
+                label: ,
+                
             },
                 {
                     kind: "thumbnails",
-                    file: "https://s.megastatics.com/thumbnails/9f851301fa0ea7b316599351ccedb423/thumbnails.vtt"
+                    file:  thumbnails
                 }],
                 intro: {
                 start: 138,
