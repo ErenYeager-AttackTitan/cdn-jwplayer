@@ -24,57 +24,57 @@
 <script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
 
 <script>
-    const playerInstance = jwplayer("player").setup({
-        controls: true,
-        displaytitle: true,
-        displaydescription: true,
-        abouttext: "RyuuStream",
-        aboutlink: "https://animezia.com",
-        autostart: true,
-        skin: {
-            name: "netflix"
-        },
-        logo: {
-            file: "",
-            link: ""
-        },
-        captions: {
-            enabled: true
-        },
-        playlist: [{
-            title: "",
+        const API_URL = 'https://anime-api-nu-jet.vercel.app/api/stream?id=anime-112?ep=3303&type=sub&server=hd-2';
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) throw new Error('API returned failure');
+
+        const stream = data.results.streamingLink;
+
+        const captions = stream.tracks
+          .filter(t => t.kind === 'captions')
+          .map(t => ({
+            file: t.file,
+            label: t.label,
+            kind: t.kind,
+            default: t.default || false
+          }));
+
+        const thumbnailTrack = stream.tracks.find(t => t.kind === 'thumbnails');
+
+        const playerInstance = jwplayer("player").setup({
+          controls: true,
+          displaytitle: true,
+          displaydescription: true,
+          abouttext: "RyuuStream",
+          aboutlink: "https://animezia.com",
+          autostart: true,
+          skin: { name: "netflix" },
+          playlist: [{
+            title: "Dynamic Video",
             description: "",
-            image: "",
             sources: [{
-                "file": "https://cdn-jwplayer.netlify.app/eren.mp4"
+              file: `https://gogoanime-and-hianime-proxy.vercel.app/m3u8-proxy?url=${encodeURIComponent(stream.link.file)}`,
+              type: "hls"
             }],
-            tracks: [{
-                kind: "captions",
-                file: "",
-                label: "English",
-                default: true
-            },
-                {
-                    kind: "thumbnails",
-                    file: "https://s.megastatics.com/thumbnails/9f851301fa0ea7b316599351ccedb423/thumbnails.vtt"
-                }],
-                intro: {
-                start: 138,
-                end: 215
-            },
-            outro: {
-                start: 1452,
-                end: 1542
-                    }
-        }],
-        advertising: {
+            tracks: [
+              ...captions,
+              ...(thumbnailTrack ? [thumbnailTrack] : [])
+            ],
+            intro: stream.intro,
+            outro: stream.outro
+          }],
+          advertising: {
             client: "vast",
             schedule: [{
-                offset: "pre",
-                tag: "https://cdn-jwplayer.netlify.app/eren-yeager.xml"
+              offset: "pre",
+              tag: "https://cdn-jwplayer.netlify.app/eren-yeager.xml"
             }]
-        }
-    });
+          }
+        });
+          
 
 playerInstance.on('time', function(event) {
         const currentTime = event.position;
