@@ -1,95 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel="stylesheet" href="https://cdn-jwplayer.netlify.app/style.css">
-  <meta name="robots" content="noindex, nofollow" />
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
-</head>
-<body>
+<script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
+<div id="player"></div>
 
-  <div class="wrap">
-    <div id="player"></div>
-    <div id="skipIntro"></div>
-  </div>
-
-  <script>
-    const apiURL = 'https://anime-api-nu-jet.vercel.app/api/stream?id=anime-112?ep=3303&type=sub&server=hd-2';
-
-    async function fetchStreamInfo() {
-      try {
-        const res = await fetch(apiURL);
-        const data = await res.json();
-
-        if (!data.success) {
-          document.getElementById('player').textContent = 'Failed to get stream info';
-          return;
-        }
-
-        const stream = data.results.streamingLink;
-        const videoURL = stream.link.file;
-        const subtitles = stream.tracks.find(track => track.kind === 'captions');
-        const thumbnails = stream.tracks.find(track => track.kind === 'thumbnails');
-
-        const playerInstance = jwplayer("player").setup({
-          controls: true,
-          displaytitle: true,
-          displaydescription: true,
-          abouttext: "RyuuStream",
-          aboutlink: "https://animezia.com",
-          autostart: true,
-          skin: {
-            name: "netflix"
-          },
-          logo: {
-            file: "",
-            link: ""
-          },
-          captions: {
-            enabled: true
-          },
-          playlist: [{
-            title: "",
-            description: "",
-            image: "",
-            sources: [{
-              file: `https://gogoanime-and-hianime-proxy.vercel.app/m3u8-proxy?url=${videoURL}`
-            }],
-            tracks: [
-              subtitles ? {
-                kind: "captions",
-                file: subtitles.file,
-                label: subtitles.label || "Subtitles",
-                default: true
-              } : null,
-              thumbnails ? {
-                kind: "thumbnails",
-                file: thumbnails.file
-              } : null
-            ].filter(Boolean)
-          }],
-          advertising: {
-            client: "vast",
-            schedule: [{
-              offset: "pre",
-              tag: "https://cdn-jwplayer.netlify.app/eren-yeager.xml"
-            }]
-          }
-        });
-
-        playerInstance.on("ready", function () {
-          // Custom player behavior here if needed
-        });
-
-      } catch (error) {
-        console.error('Error fetching stream info:', error);
-        document.getElementById('player').textContent = 'An error occurred while loading the video.';
+<script>
+jwplayer("player").setup({
+  file: "https://amg02159-kcglobal-amg02159c1-samsung-in-521.playouts.now.amagi.tv/playlist/amg02159-kcglobal-animax-samsungin/playlist.m3u8",
+  width: "100%",
+  aspectratio: "16:9",
+  autostart: true,
+  advertising: {
+    client: "vast",
+    schedule: [
+      {
+        offset: "scte", // Trigger ad when SCTE-35 break marker is detected
+        tag: "https://cdn-jwplayer.netlify.app/eren-yeager.xml"
       }
-    }
-
-    fetchStreamInfo();
-  </script>
-
-</body>
-</html>
+    ]
+  }
+});
+</script>
