@@ -1,50 +1,65 @@
-<video id="video" controls autoplay muted playsinline style="width: 100%; max-width: 800px;"></video>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JWPlayer Custom Ad Detector</title>
+  <script src="https://cdn.jwplayer.com/libraries/aVr2lJgW.js"></script>
+</head>
+<body>
+
+<div id="player"></div>
 
 <script>
-const video = document.getElementById("video");
-const hls = new Hls();
+const customVastTag = "https://your-ad-server.com/vast.xml"; // ✅ Your VAST URL here
 
-hls.loadSource("https://amg02159-kcglobal-amg02159c1-samsung-in-521.playouts.now.amagi.tv/playlist/amg02159-kcglobal-animax-samsungin/playlist.m3u8");
-hls.attachMedia(video);
+let adPlaying = false;
 
-// Track when last ad was played
-let adCooldown = false;
+// 🧠 Helper to detect ad segment patterns
+function isAdSegment(url) {
+  return url.includes("/beacon/") || url.includes("seen-ad=1") || url.includes("redirect_url=");
+}
 
-hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
-  data.samples.forEach(sample => {
-    const cueData = new TextDecoder().decode(sample.data);
-    console.log("📡 SCTE-35 Marker Detected:", cueData);
-
-    // Only play ad if not already triggered recently
-    if (!adCooldown) {
-      adCooldown = true;
-      playAdThenResume();
-
-      // Cooldown prevents multiple triggers for the same break
-      setTimeout(() => {
-        adCooldown = false;
-      }, 60000); // 60 seconds
-    }
-  });
+// ✅ JWPlayer setup
+const player = jwplayer("player").setup({
+  file: "https://amg02159-kcglobal-amg02159c1-samsung-in-521.playouts.now.amagi.tv/playlist/amg02159-kcglobal-animax-samsungin/playlist.m3u8",
+  autostart: true,
+  mute: false,
+  width: "100%",
+  height: "100%",
+  type: "hls",
+  advertising: {
+    client: "vast",
+    tag: "", // leave empty so you can trigger manually via playAd()
+    skipoffset: 0
+  }
 });
 
-function playAdThenResume() {
-  video.pause();
+// 🔁 Listen for each HLS fragment load (i.e. .ts segment request)
+player.on("fragmentLoad", function (e) {
+  const url = e.fragment && e.fragment.url;
 
-  const adVideo = document.createElement("video");
-  adVideo.src = "https://cdn-jwplayer.netlify.app/eren.mp4";
-  adVideo.autoplay = true;
-  adVideo.controls = false;
-  adVideo.playsInline = true;
-  adVideo.style = "width: 100%; max-width: 800px;";
-  document.body.insertBefore(adVideo, video);
-  video.style.display = "none";
+  if (url && isAdSegment(url) && !adPlaying) {
+    adPlaying = true;
 
-  adVideo.addEventListener("ended", () => {
-    adVideo.remove();
-    video.style.display = "block";
-    video.play();
-  });
-}
+    console.log("🚨 Ad segment detected:", url);
+
+    // Pause content
+    player.pause();
+
+    // Trigger your own ad
+    player.playAd(customVastTag)
+      .then(() => {
+        console.log("✅ VAST ad completed");
+        adPlaying = false;
+        player.play();
+      })
+      .catch(err => {
+        console.error("❌ VAST ad failed", err);
+        adPlaying = false;
+        player.play();
+      });
+  }
+});
 </script>
+
+</body>
+</html>
