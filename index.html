@@ -8,16 +8,23 @@ const hls = new Hls();
 hls.loadSource("https://amg02159-kcglobal-amg02159c1-samsung-in-521.playouts.now.amagi.tv/playlist/amg02159-kcglobal-animax-samsungin/playlist.m3u8");
 hls.attachMedia(video);
 
-let adPlaying = false;
+// Track when last ad was played
+let adCooldown = false;
 
 hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
   data.samples.forEach(sample => {
     const cueData = new TextDecoder().decode(sample.data);
     console.log("📡 SCTE-35 Marker Detected:", cueData);
 
-    if (!adPlaying) {
-      adPlaying = true;
+    // Only play ad if not already triggered recently
+    if (!adCooldown) {
+      adCooldown = true;
       playAdThenResume();
+
+      // Cooldown prevents multiple triggers for the same break
+      setTimeout(() => {
+        adCooldown = false;
+      }, 60000); // 60 seconds
     }
   });
 });
@@ -29,6 +36,7 @@ function playAdThenResume() {
   adVideo.src = "https://cdn-jwplayer.netlify.app/eren.mp4";
   adVideo.autoplay = true;
   adVideo.controls = false;
+  adVideo.playsInline = true;
   adVideo.style = "width: 100%; max-width: 800px;";
   document.body.insertBefore(adVideo, video);
   video.style.display = "none";
@@ -37,7 +45,6 @@ function playAdThenResume() {
     adVideo.remove();
     video.style.display = "block";
     video.play();
-    adPlaying = false;
   });
 }
 </script>
